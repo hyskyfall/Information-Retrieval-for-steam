@@ -54,7 +54,7 @@ public class GameResult extends HttpServlet {
 		}
 		//创建JsonObject
 		JSONObject root = new JSONObject();
-		root.put("result", array);
+		root.put("data", array);
 		
 //		GameList gl = new GameList(); 
 //		String resCtt = gl.gamelist;

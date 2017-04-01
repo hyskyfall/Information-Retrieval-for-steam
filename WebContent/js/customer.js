@@ -22,23 +22,28 @@ function gameSearchBtn() {
 			xmlDoc = xmlhttp.responseText;
 			txt = "";
 			DisplaySch(xmlDoc);
-		} 
-//		else {
-//			alert("not valid path");
-//		}
+		}
+		//		else {
+		//			alert("not valid path");
+		//		}
 	}
 	xmlhttp.open("GET", "http://localhost:8080/SteamGame/GameResult", true);
 	xmlhttp.setRequestHeader("MyHeader", inputSearch);
 	xmlhttp.send();
 }
 
-function DisplaySch(jsonmsg) {
-//	$("#show_Sch_Rlt").text(data);
-	var jsonText = JSON.stringify(jsonmsg);
-	var data = jsonText.data;
-	var txt ="";
-//	for(i = 0; i < 2; i++) {
-//		txt = txt + data[i].childNodes[0].nodeValue + "<br>";
-//	}
-	$("#show_Sch_Rlt").innerHTML = data;
+function DisplaySch(response) {
+	//	$("#show_Sch_Rlt").text(data);
+//	var jsonText = JSON.stringify(jsonmsg);
+	var myobj = JSON.parse(response);;
+	alert("jsonText==="+myobj);
+	var txt = "";
+	for(var i in myobj.data) {
+		var name = myobj.data[i].Rname;
+		var id = myobj.data[i].Rid;
+		var li = $("<li>" + name + "</li>");
+		$("#show_Sch_Rlt").append(li);
+	}
+	
+//	$("#show_Sch_Rlt").innerHTML = data;
 }
