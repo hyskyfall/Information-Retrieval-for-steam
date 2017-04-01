@@ -42,18 +42,19 @@ public class GameResult extends HttpServlet {
 		String inputSearch = request.getHeader("MyHeader");
 	//handle data
 		//return Search result
-		ArrayList<String> schRlt = new searchQuery().search(inputSearch);
+		String path = this.getServletContext().getRealPath("/WEB-INF/classes/gamelist.txt");
+		ArrayList<String> schRlt = new searchQuery(path).search(inputSearch);
 		//创建JsonArrau
-//		JSONArray array = new JSONArray();
+		JSONArray array = new JSONArray();
 		JSONObject son = new JSONObject();
-		for(int i=0; i<1; i++){
-			son.put("Rid", 4067);
-			son.put("Rname", "dota2");
-//			array.add(son);
+		for(int i=0; i<schRlt.size(); i++){
+			son.put("Rid", i);
+			son.put("Rname", schRlt.get(i));
+			array.add(son);
 		}
 		//创建JsonObject
-//		JSONObject root = new JSONObject();
-//		root.put("result", array);
+		JSONObject root = new JSONObject();
+		root.put("result", array);
 		
 //		GameList gl = new GameList(); 
 //		String resCtt = gl.gamelist;
@@ -63,7 +64,7 @@ public class GameResult extends HttpServlet {
 		response.setHeader("cache-control", "no-cache");
 		//传输json
 		PrintWriter out = response.getWriter();
-		out.write(son.toString());
+		out.write(root.toString());
 		out.flush();
 	}
 
@@ -74,15 +75,4 @@ public class GameResult extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-//	public static void main(String args[]){
-//		JSONArray array = new JSONArray();
-//		for(int i=0; i<2; i++){
-//			JSONObject son = new JSONObject();
-//			son.put("Rid", i);
-//			son.put("Rname", "qifei"+i);
-//			
-//			array.add(son);
-//		}
-//	}
 }
